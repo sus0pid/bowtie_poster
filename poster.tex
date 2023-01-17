@@ -84,61 +84,33 @@
 
 \heading{Trustworthy Mixnet Construction from Untrusted Resources}
 
-\begin{center}
+
   \begin{figure}
     \includegraphics[width=\rightcolwidth]{images/problem_overview.pdf}
     \caption{\textbf{Anytrust assumption} might break in the real world: users suffer from \textbf{end-to-end compromise} and \textbf{client enumeration} by passive adversary.}
   \end{figure}
   
-  \vspace{1cm}
+  \vspace{-1cm}
 
     \begin{figure}
     \includegraphics[width=\rightcolwidth]{images/problem_max.pdf}
     \caption{Adversary \textbf{maximizes} the compromised rate by achieving even distribution.}
   \end{figure}
   
-  \vspace{1cm}
-  
+  \vspace{1.5cm}
+ \heading{Mixnet construction model:}
     \begin{figure}
     \includegraphics[width=\rightcolwidth]{images/problem_model.pdf}
-    \caption{Mixnet construction model: 3-stage process.}
+    \caption{3-stage process: periodically reconstruction; only use a subset of nodes.}
   \end{figure}
-    \end{center}
-\end{block}
-
-\begin{block}{}
+  
+  \vspace{1.5cm}
 \heading{Example of Adversary's Manipulation}
   \begin{figure}
     \includegraphics[width=\rightcolwidth]{images/problem_eg.pdf}
     \caption{Adversary can compromise more than $10\%$ of total traffic with $\alpha=0.2$ resources by manipulating mixes' bandwidth.}
   \end{figure}
 \end{block}
-
-
-  \begin{minipage}[t]{0.32\rightcolwidth}
-   \begin{figure}
-   \centering
-    \includegraphics[width=0.8\textwidth]{images/UoE-logo.png}
-  \end{figure}
-  \end{minipage}
-  \hfil
-  \begin{minipage}[t]{0.32\rightcolwidth}
-
-  \begin{figure}
-    \centering
-    \includegraphics[width=0.8\textwidth]{images/unamur-logo.jpeg}
-  \end{figure}
-  \end{minipage}
-  \hfill
-  \begin{minipage}[t]{0.33\rightcolwidth}
-\vspace{-1cm}
-   \begin{figure}
-     \centering
-      \includegraphics[width=0.8\textwidth]{images/REPHRAIN-logo.pdf}
-  \end{figure}
-  \end{minipage}
-
-
 %  \begin{block}{Code availability}
 %    \begin{center}
 %      See me on github!\\
@@ -199,47 +171,89 @@
 %  \end{alertblock}
 % \vspace{1cm}
 
-\begin{alertblock}{Results-A Balance between Security and Performance}
-\end{alertblock}
+  \begin{alertblock}{Design}
+  \heading{Challenges}
+  \begin{enumerate}
+    \item \textbf{An adversary's manipulation is hard to detect.}
+    \item \textbf{An adversary can perform client enumeration at a low cost.}
+    \item \textbf{Tolerating nodes churn.}
+    \item \textbf{Performance bottleneck comes from the layer with lowest capacity.}
+  \end{enumerate}
+      
+    \heading{Our Approach}
+    \begin{enumerate}
+    \item \textbf{Contradictory requirements creates challenges for even distribution.}
+    \item \textbf{Guard layer mitigates the risk of client enumeration.}
+    \item \textbf{Stability tracking and network maintenance design.}
+    \item \textbf{Bin-packing placement to reach even layer capacity.}
+    \end{enumerate}
+    
+    \vspace{2cm}
+    \heading{Bow-Tie: High-level Overview}
+    \begin{figure}[t]
+    \includegraphics[width=0.95\rightcolwidth]{images/bowtie_init.pdf}
+    \caption{Mixnet Initialization}
+    \end{figure}
+%     \vspace{1cm}
+%    \begin{figure}[t]
+%    \includegraphics[width=0.95\rightcolwidth]{images/bowtie_maintain.pdf}
+%    \caption{Mixnet Maintenance}
+%    \end{figure}
+    \vspace{1cm}
+    \begin{figure}[t]
+    \includegraphics[width=0.95\rightcolwidth]{images/bowtie_routing.pdf}
+    \caption{Mixnet Routing}
+    \end{figure}
+    \end{alertblock}
+    
+    \vspace{1cm}
+    \begin{alertblock}{Takeaways}
+    \begin{itemize}
+    \item \textbf{Design: A constrained guard layer that is populated with stable and high performant relays creates a challenge for the adversary.}
+    \vspace{1cm}
+    \item \textbf{Results: Bow-Tie finds a good balance between security and performance.}
+    \end{itemize}
+  \end{alertblock}
 
- \begin{alertblock}{Results -- Security, Performance, and Efficiency}
-    \begin{minipage}[t]{0.95\maincolwidth}
-      \vspace{-1cm}
-      \begin{figure}[t!]
-        \centering
-        \subfloat[h=0.35]{\includegraphics[width=0.33\textwidth]{images/best_bw_35.pdf}}
-        \subfloat[h=0.55]{\includegraphics[width=0.33\textwidth]{images/best_bw_55.pdf}}
-        \subfloat[h=0.75]{\includegraphics[width=0.33\textwidth]{images/best_bw_75.pdf}}
-    \caption{Fully compromised rate versus bandwidth per injected malicious node, as a bandwidth budget of 
-    $2280$ MBps is evenly distributed over a varying number of malicious mix nodes, for each mixnet 
-    construction strategy. $h$ denotes the threshold at sampling step.}
-      \end{figure}
-      \vspace{1cm}
-\begin{figure}[t!]
-    \centering
-    \subfloat[No guard]{\includegraphics[width=0.33\textwidth]{images/ttfb_static_simple.pdf}}
-    \subfloat[With guard]{\includegraphics[width=0.33\textwidth]{images/ttfb_static_simple_withguard.pdf}}
-    \subfloat[Individual Risks]{\includegraphics[width=0.33\textwidth]{images/ttfb_email_authors.pdf}}
-	%\vspace{-1em}
-    \caption{Average time to fall into a fully compromised route for the clients. 
-    Figure (a) shows insufficient security if only applying topological construction algorithms. 
-    Figure (b) shows discrepancies when our guard proposal is
-used for different mixnet topological construction algorithms. 
-Figure (c) shows differences when users communicate with different patterns .}
-    \label{fig:placement}
-\end{figure}
-\vspace{1cm}
-\begin{figure}[t!]
-    \centering
-    \subfloat[Bw-weighted path selection]{\includegraphics[width=0.33\textwidth]{images/waittime_bw.pdf}}
-    \subfloat[Random path selection]{\includegraphics[width=0.33\textwidth]{images/waittime_rand.pdf}}
-    \subfloat[Runtime per iteration]{\includegraphics[width=0.33\textwidth]{images/Runtime.pdf}}
-%	\vspace{-1em}
-    \caption{Propagation time and algorithm runtime.
-       \vspace{0em}}
-    \label{fig:placement}
-\end{figure}
-    \end{minipage}
+% \begin{alertblock}{Results -- Security, Performance, and Efficiency}
+%    \begin{minipage}[t]{0.95\maincolwidth}
+%      \vspace{-1cm}
+%      \begin{figure}[t!]
+%        \centering
+%        \subfloat[h=0.35]{\includegraphics[width=0.33\textwidth]{images/best_bw_35.pdf}}
+%        \subfloat[h=0.55]{\includegraphics[width=0.33\textwidth]{images/best_bw_55.pdf}}
+%        \subfloat[h=0.75]{\includegraphics[width=0.33\textwidth]{images/best_bw_75.pdf}}
+%    \caption{Fully compromised rate versus bandwidth per injected malicious node, as a bandwidth budget of 
+%    $2280$ MBps is evenly distributed over a varying number of malicious mix nodes, for each mixnet 
+%    construction strategy. $h$ denotes the threshold at sampling step.}
+%      \end{figure}
+%      \vspace{1cm}
+%\begin{figure}[t!]
+%    \centering
+%    \subfloat[No guard]{\includegraphics[width=0.33\textwidth]{images/ttfb_static_simple.pdf}}
+%    \subfloat[With guard]{\includegraphics[width=0.33\textwidth]{images/ttfb_static_simple_withguard.pdf}}
+%    \subfloat[Individual Risks]{\includegraphics[width=0.33\textwidth]{images/ttfb_email_authors.pdf}}
+%	%\vspace{-1em}
+%    \caption{Average time to fall into a fully compromised route for the clients. 
+%    Figure (a) shows insufficient security if only applying topological construction algorithms. 
+%    Figure (b) shows discrepancies when our guard proposal is
+%used for different mixnet topological construction algorithms. 
+%Figure (c) shows differences when users communicate with different patterns .}
+%    \label{fig:placement}
+%\end{figure}
+%\vspace{1cm}
+%\begin{figure}[t!]
+%    \centering
+%    \subfloat[Bw-weighted path selection]{\includegraphics[width=0.33\textwidth]{images/waittime_bw.pdf}}
+%    \subfloat[Random path selection]{\includegraphics[width=0.33\textwidth]{images/waittime_rand.pdf}}
+%    \subfloat[Runtime per iteration]{\includegraphics[width=0.33\textwidth]{images/Runtime.pdf}}
+%%	\vspace{-1em}
+%    \caption{Propagation time and algorithm runtime.
+%       \vspace{0em}}
+%    \label{fig:placement}
+%\end{figure}
+%    \end{minipage}
+ 
 %    \hfill
     
 %    \begin{minipage}[t]{0.04\maincolwidth}
@@ -288,63 +302,50 @@ Figure (c) shows differences when users communicate with different patterns .}
 %     
 %    \end{minipage}
   
-  \end{alertblock}
+%  \end{alertblock}
+
 \end{column}
 
 \separatorcolumn
 
 \begin{column}{\rightcolwidth}
 
-  \begin{block}{Design}
-  \heading{Challenges}
-  \begin{enumerate}
-    \item An adversary's manipulation is hard to detect.
-    \item An adversary can perform client enumeration at a low cost.
-    \item Tolerating nodes churn.
-    \item Performance bottleneck comes from the layer with lowest capacity.
-  \end{enumerate}
-      
-    \heading{Our Approach}
-    \begin{enumerate}
-    \item Contradictory requirements creates challenges for even distribution.
-    \item Guard layer mitigates the risk of client enumeration.
-    \item Stability tracking and network maintenance design.
-    \item Bin-packing placement to reach even layer capacity.
-    \end{enumerate}
-    
-    \heading{Bow-Tie: High-level Overview}
-    \begin{figure}[t]
-    \includegraphics[width=0.95\rightcolwidth]{images/bowtie_init.pdf}
-    \caption{Mixnet Initialization}
-    \end{figure}
-%     \vspace{1cm}
-%    \begin{figure}[t]
-%    \includegraphics[width=0.95\rightcolwidth]{images/bowtie_maintain.pdf}
-%    \caption{Mixnet Maintenance}
-%    \end{figure}
-    \vspace{0.5cm}
-    \begin{figure}[t]
-    \includegraphics[width=0.95\rightcolwidth]{images/bowtie_routing.pdf}
-    \caption{Mixnet Routing}
-    \end{figure}
-    \vspace{-1cm}
-    \heading{Takeaways}
-    \begin{itemize}
-    \item A constrained guard layer that is populated with stable and high performant relays creates a challenge for the adversary.
-    \item Bow-Tie finds a good balance between security and performance.
-    \end{itemize}
-  \end{block}
+\begin{block}{Analysis}
 
 
-%  \begin{block}{Key Takeaways}
-%    There have been a lot of exciting findings in this work, including key takeaways as follows:
-%    \begin{itemize}
-%      \item Bow-Tie provides higher level security than others presently; it enables good performance and efficiency as well.
-%      %\item Bow-Tie balances the tradeoff between security and performance.
-%      \item Using guards in layered routing for mixnets lowers the risk of users being de-anonymised.
-%      \item Bandwidth-weighted path selection provides better load balance and security level.
-%    \end{itemize}
-%  \end{block}
+\heading{A Balance between Security and Performance}
+      \begin{figure}[t!]
+        \centering
+        \subfloat[End-to-end compromise rate]{\includegraphics[width=0.45\textwidth]{images/worst_case_a02_bw.pdf}}
+%        \subfloat[h=0.55]{\includegraphics[width=0.33\textwidth]{images/GE_cdf.pdf}}
+        \subfloat[Average queuing delay]{\includegraphics[width=0.45\textwidth]{images/waittime_bw.pdf}}
+    \caption{Adversary controls $\alpha=0.2$ of the total bandwidth. $h$ denotes the active pool size at the sampling step.}
+      \end{figure}
+
+
+\heading{Necessity of Guard Design}
+\begin{figure}[t!]
+    \centering
+    \subfloat[Bow-Tie vs others]{\includegraphics[width=0.33\textwidth]{images/full_ttfc_cdf_routesimresults.pdf}}
+    \subfloat[Turn of guard logic]{\includegraphics[width=0.33\textwidth]{images/no_guard_ttfc_cdf_routesimresults.pdf}}
+    \subfloat[Turn on guard logic]{\includegraphics[width=0.33\textwidth]{images/dynamic_200guard_ttfc_cdf_routesimresults.pdf}}
+	%\vspace{-1em}
+    \caption{The combination of guard layer and client-side guard logic reduces clients' exposure more effectively than they each could do.}
+    \label{fig:placement}
+\end{figure}
+
+
+\heading{Influence of Protocol Design and User Behaviour}
+\begin{figure}[t!]
+    \centering
+    \subfloat[Influence of protocol design]{\includegraphics[width=0.45\textwidth]{images/time_loopix_vs_vuvuzela.pdf}}
+    \subfloat[Influence of individual behaviours]{\includegraphics[width=0.45\textwidth]{images/ttfb_email_authors.pdf}}
+%    \subfloat[Runtime per iteration]{\includegraphics[width=0.33\textwidth]{images/Runtime.pdf}}
+%	\vspace{-1em}
+    \caption{(a) Bow-Tie's effect is compatible to mixnet protocol designs. (b) Users can figure out how long they could safely use the network based on their behaviours.}
+    \label{fig:placement}
+\end{figure}
+\end{block}
 
 \vspace{-1cm}
   \begin{block}{Contact}
@@ -367,9 +368,45 @@ Figure (c) shows differences when users communicate with different patterns .}
   \hfill
   \begin{minipage}[t]{0.2\rightcolwidth}
   \end{minipage}
-
- 
   \end{block}
+  
+  
+  
+ \begin{minipage}[t]{0.32\rightcolwidth}
+   \begin{figure}
+   \centering
+    \includegraphics[width=0.8\textwidth]{images/UoE-logo.png}
+  \end{figure}
+  \end{minipage}
+  \hfil
+  \begin{minipage}[t]{0.32\rightcolwidth}
+
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/unamur-logo.jpeg}
+  \end{figure}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[t]{0.33\rightcolwidth}
+\vspace{-1cm}
+   \begin{figure}
+     \centering
+      \includegraphics[width=0.8\textwidth]{images/REPHRAIN-logo.pdf}
+  \end{figure}
+  \end{minipage}
+
+
+%  \begin{block}{Key Takeaways}
+%    There have been a lot of exciting findings in this work, including key takeaways as follows:
+%    \begin{itemize}
+%      \item Bow-Tie provides higher level security than others presently; it enables good performance and efficiency as well.
+%      %\item Bow-Tie balances the tradeoff between security and performance.
+%      \item Using guards in layered routing for mixnets lowers the risk of users being de-anonymised.
+%      \item Bandwidth-weighted path selection provides better load balance and security level.
+%    \end{itemize}
+%  \end{block}
+
+
 
  % \begin{figure}
       %\includegraphics[scale=2]{images/logo.png}
